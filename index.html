@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maktaba al-Shīʿa — Bibliothèque Académique Islamique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f4ef;--bg2:#fff;--bg3:#f0ece4;--bg4:#e8e2d8;
+  --bdr:rgba(60,50,30,.1);--bdr2:rgba(60,50,30,.18);
+  --ink:#1a1612;--ink2:#4a3f30;--ink3:#8a7a66;--ink4:#b5a898;
+  --gold:#9a6f2a;--gold2:#c4913a;--goldbg:rgba(154,111,42,.08);
+  --indigo:#3a4a8a;--red:#9a2a2a;--redbg:rgba(154,42,42,.06);
+  --green:#2a6a3a;--amber:#a06020;--amberbg:rgba(160,96,32,.08);
+  --serif:'Lora',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --arabic:'Amiri','Traditional Arabic',Georgia,serif;
+  --r:10px;--rlg:14px;
+}
+html,body{min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+::selection{background:rgba(154,111,42,.15)}
+a{color:var(--indigo)}
+
+/* Header */
+header{background:rgba(247,244,239,.95);border-bottom:1px solid var(–bdr);padding:0 20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.header-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:54px;gap:10px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:var(–goldbg);border:1px solid rgba(154,111,42,.22);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.logo-name{font-family:var(–serif);font-size:.97rem;font-weight:700;color:var(–ink)}
+.logo-sub{font-size:.58rem;color:var(–ink4);font-style:italic}
+nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+
+/* Main */
+main{max-width:920px;margin:0 auto;padding:20px 14px 48px}
+footer{border-top:1px solid var(–bdr);padding:12px 20px;text-align:center}
+footer p{font-size:.62rem;color:var(–ink4)}
+
+/* Cards */
+.card{background:var(–bg2);border:1px solid var(–bdr);border-radius:var(–rlg);padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 4px rgba(60,40,10,.06)}
+.card-warn{background:var(–redbg);border-color:rgba(154,42,42,.25)}
+.card-amber{background:var(–amberbg);border-color:rgba(160,96,32,.22)}
+
+/* Buttons */
+.tab-btn{background:none;border:none;cursor:pointer;border-radius:8px;padding:6px 12px;font-size:.74rem;font-family:var(–sans);color:var(–ink3);font-weight:400;transition:all .14s}
+.tab-btn:hover{background:var(–bg3)}
+.tab-btn.on{color:var(–gold);font-weight:600;background:var(–bg3)}
+.api-btn{border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.72rem;font-family:var(–sans);transition:all .14s}
+.api-btn.missing{background:var(–redbg);border:1px solid rgba(154,42,42,.3);color:var(–red)}
+.api-btn.ok{background:var(–goldbg);border:1px solid rgba(154,111,42,.3);color:var(–gold)}
+
+/* Modes grid */
+.modes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:7px;margin-bottom:14px}
+.mode-card{background:var(–bg2);border:1px solid var(–bdr);border-radius:var(–r);padding:10px 11px;text-align:left;cursor:pointer;transition:all .18s}
+.mode-card:hover{box-shadow:0 2px 12px rgba(60,40,10,.08);transform:translateY(-1px)}
+.mode-card.on{box-shadow:0 2px 12px rgba(60,40,10,.08)}
+.mode-icon{font-family:var(–mono);font-size:.93rem}
+.mode-label{font-size:.75rem;font-weight:600}
+.mode-desc{font-size:.61rem;color:var(–ink4);line-height:1.35;margin-top:5px}
+
+/* Search */
+.search-row{display:flex;gap:8px;margin-bottom:10px}
+.search-wrap{flex:1;position:relative}
+.search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:var(–mono);font-size:.85rem;pointer-events:none;color:var(–ink4)}
+input[type=text],input[type=password],textarea{font-family:var(–sans);width:100%;border:1px solid var(–bdr2);border-radius:var(–r);background:var(–bg2);color:var(–ink);font-size:.88rem;outline:none;padding:11px 14px}
+input[type=text]:focus,input[type=password]:focus,textarea:focus{border-color:var(–gold2);box-shadow:0 0 0 3px rgba(154,111,42,.1)}
+#search-input{padding-left:34px}
+.search-btn{background:var(–ink);color:var(–bg);border:none;border-radius:var(–r);cursor:pointer;font-weight:600;font-size:.84rem;padding:0 22px;height:44px;font-family:var(–sans);white-space:nowrap;transition:all .18s}
+.search-btn:hover{filter:brightness(1.15)}
+.search-btn:disabled{background:var(–bg3);color:var(–ink4);cursor:not-allowed;filter:none}
+
+/* Suggestions */
+.suggs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.sugg-btn{background:var(–bg2);border:1px solid var(–bdr);color:var(–ink3);cursor:pointer;border-radius:20px;padding:4px 11px;font-size:.69rem;font-family:var(–sans);transition:all .14s}
+.sugg-btn:hover{background:var(–bg3);border-color:var(–bdr2);color:var(–ink2)}
+
+/* Result */
+.result-toolbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;margin-bottom:14px;border-bottom:2px solid var(–bg4);gap:8px;flex-wrap:wrap}
+.result-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.result-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.pill-btn{border-radius:20px;cursor:pointer;font-size:.72rem;border:1px solid var(–bdr2);background:transparent;color:var(–ink3);padding:4px 12px;transition:all .14s;font-family:var(–sans)}
+.pill-btn.copy:hover{border-color:rgba(42,106,58,.35);background:rgba(42,106,58,.07);color:var(–green)}
+.pill-btn.signal:hover{border-color:rgba(154,42,42,.3);background:var(–redbg);color:var(–red)}
+
+/* Result body */
+.result-body h2{font-family:var(–serif);color:var(–ink);font-size:.98rem;font-weight:600;margin:1.8rem 0 .5rem;padding-bottom:7px;border-bottom:2px solid var(–bg4)}
+.result-body h3{font-family:var(–serif);color:var(–gold);font-size:.87rem;font-weight:600;margin:1.2rem 0 .3rem}
+.result-body hr{border:none;border-top:1px solid var(–bg4);margin:1rem 0}
+.result-body .arabic-text{direction:rtl;background:var(–bg3);border-right:3px solid var(–gold2);border-radius:0 8px 8px 0;padding:13px 18px 13px 10px;margin:.7rem 0;font-family:var(–arabic);font-size:1.1rem;color:var(–ink);line-height:2.3}
+.result-body .warn-box{margin:.35rem 0;background:var(–amberbg);border:1px solid rgba(160,96,32,.22);border-radius:7px;padding:6px 10px;font-size:.75rem;color:var(–amber)}
+.result-body p{margin:.08rem 0;line-height:1.88;color:var(–ink2);font-size:.82rem}
+.result-body .indent{margin-left:1.1rem;color:var(–ink3);font-size:.79rem;line-height:1.8}
+.result-body .bullet-p{margin-left:.7rem;color:var(–ink3);font-size:.79rem;line-height:1.8}
+.result-body a{color:var(–indigo);word-break:break-all;font-size:.73rem}
+.result-body strong{color:var(–ink);font-weight:600}
+.result-body .spacer{height:6px}
+
+/* Tooltip */
+.term{border-bottom:1px dashed var(–gold2);color:var(–gold);cursor:help}
+.term:hover{color:var(–gold2)}
+.tooltip-box{display:none;position:fixed;z-index:9999;background:#fff;border:1px solid var(–bdr2);border-radius:10px;padding:12px 14px;max-width:295px;box-shadow:0 8px 32px rgba(60,40,10,.15);font-size:.73rem;line-height:1.65;color:var(–ink2)}
+.tooltip-box.show{display:block}
+.tooltip-term-title{font-family:var(–serif);font-weight:600;color:var(–gold);margin-bottom:5px;font-size:.79rem}
+.tooltip-close-btn{display:block;margin-top:7px;background:none;border:none;color:var(–ink4);cursor:pointer;font-size:.67rem;font-family:var(–sans)}
+
+/* Loader */
+.loader{text-align:center;padding:44px 20px}
+.loader-moon{font-family:var(–serif);font-size:1.8rem;color:var(–gold);margin-bottom:12px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* History */
+.history-wrap{margin-top:14px}
+.history-label{font-size:.63rem;color:var(–ink4);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;font-weight:500}
+.hist-btn{background:var(–bg2);border:1px solid var(–bdr);color:var(–ink3);cursor:pointer;border-radius:20px;padding:4px 11px;font-size:.68rem;font-family:var(–sans);transition:all .14s;margin:2px}
+.hist-btn:hover{background:var(–bg3);border-color:var(–bdr2);color:var(–ink2)}
+
+/* Home */
+.home-screen{text-align:center;padding:52px 0 36px}
+.home-moon{font-family:var(–serif);font-size:2.4rem;color:var(–gold);margin-bottom:14px;opacity:.5}
+.home-title{font-family:var(–serif);font-style:italic;color:var(–ink3);font-size:1.02rem;margin-bottom:8px}
+.home-sub{color:var(–ink4);font-size:.72rem}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,22,18,.5);z-index:2000;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border:1px solid var(–bdr2);border-radius:16px;padding:24px 26px;max-width:440px;width:100%;box-shadow:0 8px 32px rgba(60,40,10,.15)}
+.modal-box h3{font-family:var(–serif);font-size:1rem;margin-bottom:12px;color:var(–ink)}
+.modal-box p{font-size:.74rem;color:var(–ink3);margin-bottom:14px;line-height:1.6}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.tag-btn{padding:4px 11px;border-radius:20px;border:1px solid var(–bdr2);background:transparent;color:var(–ink3);cursor:pointer;font-size:.7rem;font-family:var(–sans);transition:all .14s}
+.tag-btn.on{border-color:var(–gold2);background:var(–goldbg);color:var(–gold)}
+.modal-actions{display:flex;gap:8px;margin-top:12px}
+.btn-primary{background:var(–indigo);border:none;color:#fff;padding:8px 18px;border-radius:9px;cursor:pointer;font-weight:600;font-size:.79rem;font-family:var(–sans);transition:all .14s}
+.btn-primary:disabled{background:var(–bg3);color:var(–ink4);cursor:not-allowed}
+.btn-secondary{background:transparent;border:1px solid var(–bdr2);color:var(–ink3);padding:8px 14px;border-radius:9px;cursor:pointer;font-size:.79rem;font-family:var(–sans)}
+.success-box{text-align:center;padding:8px 0}
+.success-icon{font-size:2rem;color:var(–green);margin-bottom:8px}
+
+/* Glossary */
+.gloss-item{padding:10px 0;border-bottom:1px solid var(–bg4)}
+.gloss-term{font-family:var(–serif);font-weight:600;color:var(–gold);font-size:.8rem;margin-bottom:3px}
+.gloss-def{font-size:.73rem;color:var(–ink2);line-height:1.65}
+.count-badge{background:var(–bg3);border:1px solid var(–bdr);color:var(–ink3);padding:2px 8px;border-radius:6px;font-size:.64rem}
+
+/* Notice */
+.notice-item{display:flex;gap:12px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(–bg4)}
+.notice-item:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.notice-ico{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.notice-title{font-weight:600;font-size:.81rem;margin-bottom:3px;color:var(–ink)}
+.notice-text{color:var(–ink3);font-size:.75rem;line-height:1.65}
+
+/* Section header */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.section-title{font-family:var(–serif);font-size:1.02rem;font-weight:600;color:var(–ink)}
+
+/* Responsive */
+@media(max-width:560px){
+.modes-grid{grid-template-columns:repeat(2,1fr)}
+.result-toolbar{flex-direction:column;align-items:flex-start}
+.header-inner{height:auto;padding:8px 0}
+}
+</style>
+
+</head>
+<body>
+
+<!-- Tooltip -->
+
+<div class="tooltip-box" id="tooltip">
+  <div class="tooltip-term-title" id="tooltip-term"></div>
+  <div id="tooltip-def"></div>
+  <button class="tooltip-close-btn" onclick="hideTooltip()">fermer ✕</button>
+</div>
+
+<!-- Modal : Clé API -->
+
+<div class="modal-overlay" id="modal-api">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <h3>🔑 Clé API Anthropic</h3>
+    <p>
+      Obtenez votre clé sur
+      <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+      → "API Keys" → "Create Key".<br>
+      Elle est sauvegardée dans votre navigateur uniquement.
+    </p>
+    <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." oninput="updateApiKey(this.value)" style="margin-bottom:8px">
+    <p id="api-key-status" style="font-size:.72rem;color:var(--green);display:none;margin-bottom:0"></p>
+    <div class="modal-actions" style="margin-top:14px">
+      <button class="btn-primary" onclick="closeModal('modal-api')">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal : Feedback -->
+
+<div class="modal-overlay" id="modal-feedback" onclick="closeModal('modal-feedback')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div id="feedback-form-wrap">
+      <h3>📣 Signaler un problème</h3>
+      <p id="feedback-subject-text" style="font-size:.71rem;color:var(--ink3);margin-bottom:14px"></p>
+      <div class="tag-row" id="feedback-tags"></div>
+      <textarea id="feedback-msg-input" placeholder="Décrivez le problème… (ex: numéro de volume incorrect, position mal attribuée)" style="width:100%;min-height:80px;resize:vertical;border-radius:9px"></textarea>
+      <div class="modal-actions">
+        <button class="btn-primary" id="feedback-send-btn" onclick="sendFeedback()" disabled>Envoyer</button>
+        <button class="btn-secondary" onclick="closeModal('modal-feedback')">Annuler</button>
+      </div>
+    </div>
+    <div id="feedback-success-wrap" style="display:none">
+      <div class="success-box">
+        <div class="success-icon">✓</div>
+        <p style="font-family:var(--serif);font-weight:600;color:var(--ink);margin-bottom:5px">Signalement préparé</p>
+        <p style="font-size:.75rem;color:var(--ink3)">Votre client mail s'ouvre. Merci pour votre contribution.</p>
+        <button class="btn-secondary" onclick="closeModal('modal-feedback')" style="margin-top:12px">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">☽</div>
+      <div>
+        <div class="logo-name">Maktaba al-Shīʿa</div>
+        <div class="logo-sub">Bibliothèque académique islamique chiite</div>
+      </div>
+    </div>
+    <nav>
+      <button class="api-btn missing" id="api-btn" onclick="openModal('modal-api')">⚙️ API manquante</button>
+      <button class="tab-btn on" id="tab-search" onclick="switchTab('search')">Recherche</button>
+      <button class="tab-btn" id="tab-glossary" onclick="switchTab('glossary')">Glossaire</button>
+      <button class="tab-btn" id="tab-notice" onclick="switchTab('notice')">Notice</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- TAB : Recherche -->
+
+  <div id="tab-content-search">
+
+```
+<div id="api-warning" class="card card-warn" style="margin-bottom:14px">
+  <p style="font-size:.8rem;color:var(--red)">
+    ⚠️ Clé API manquante —
+    <button onclick="openModal('modal-api')" style="background:none;border:none;color:var(--indigo);cursor:pointer;font-size:.8rem;text-decoration:underline;padding:0">
+      Cliquez ici pour la configurer
+    </button>
+  </p>
+</div>
+
+<div class="modes-grid" id="modes-grid"></div>
+
+<div class="search-row">
+  <div class="search-wrap">
+    <span class="search-ico" id="search-ico">⊕</span>
+    <input type="text" id="search-input" placeholder="Votre sujet…" onkeydown="if(event.key==='Enter')doSearch()">
+  </div>
+  <button class="search-btn" id="search-btn" onclick="doSearch()">Rechercher</button>
+</div>
+
+<div class="suggs" id="suggs"></div>
+
+<div id="loader" class="card loader" style="display:none">
+  <div class="loader-moon">☽</div>
+  <p id="loader-title" style="font-size:.88rem;font-weight:500;color:var(--ink);margin-bottom:5px"></p>
+  <p style="font-size:.72rem;color:var(--ink3)">Génération de la réponse académique en cours…</p>
+  <p style="font-size:.64rem;color:var(--ink4);margin-top:4px">Références exactes · Textes arabes · Évaluations des savants</p>
+</div>
+
+<div id="error-box" class="card card-warn" style="display:none;font-size:.8rem;color:var(--red)"></div>
+
+<div id="result-box" class="card" style="display:none">
+  <div class="result-toolbar">
+    <div class="result-meta">
+      <span class="mode-icon" id="result-ico" style="font-family:var(--mono);font-size:.88rem"></span>
+      <span id="result-mode-label" style="font-family:var(--serif);font-weight:600;font-size:.81rem"></span>
+      <span id="result-query-label" style="color:var(--ink4);font-size:.73rem"></span>
+    </div>
+    <div class="result-actions">
+      <span id="result-time" style="font-size:.63rem;color:var(--ink4)"></span>
+      <button class="pill-btn copy" id="copy-btn" onclick="copyResult()">Copier</button>
+      <button class="pill-btn signal" onclick="openFeedback()">Signaler</button>
+    </div>
+  </div>
+  <div class="result-body" id="result-body"></div>
+</div>
+
+<div id="history-wrap" class="history-wrap" style="display:none">
+  <div class="history-label">Historique</div>
+  <div id="history-btns"></div>
+</div>
+
+<div id="home-screen" class="home-screen">
+  <div class="home-moon">☽</div>
+  <p class="home-title">Maktaba al-Shīʿa</p>
+  <p class="home-sub">Sélectionnez un mode · Tapez votre sujet · Les termes techniques sont cliquables</p>
+</div>
+```
+
+  </div>
+
+  <!-- TAB : Glossaire -->
+
+  <div id="tab-content-glossary" style="display:none">
+    <div class="card">
+      <div class="section-header">
+        <div class="section-title">Glossaire des termes</div>
+        <span class="count-badge" id="gloss-count"></span>
+      </div>
+      <p style="font-size:.71rem;color:var(--ink3);margin-bottom:10px">Les termes soulignés dans les réponses sont cliquables pour afficher leur définition.</p>
+      <input type="text" id="gloss-search" placeholder="Rechercher un terme…" oninput="filterGlossary(this.value)" style="margin-bottom:12px">
+      <div id="gloss-list"></div>
+    </div>
+  </div>
+
+  <!-- TAB : Notice -->
+
+  <div id="tab-content-notice" style="display:none">
+    <div class="card">
+      <h2 style="font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:16px;color:var(--ink)">À propos de cet outil</h2>
+      <div class="notice-item">
+        <span class="notice-ico">🎓</span>
+        <div>
+          <div class="notice-title">Audience</div>
+          <p class="notice-text">Étudiants en sciences islamiques (ṭullāb al-ʿilm) et chercheurs. L'outil suppose un intérêt sérieux pour les sources chiites primaires.</p>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-ico">🔑</span>
+        <div>
+          <div class="notice-title">Clé API Anthropic</div>
+          <p class="notice-text">Cet outil nécessite une clé API personnelle obtenue sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>. Elle est stockée uniquement dans votre navigateur (localStorage) et part directement vers l'API Anthropic — elle n'est jamais transmise à aucun serveur tiers.</p>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-ico">⚖️</span>
+        <div>
+          <div class="notice-title">Double-vérification</div>
+          <p class="notice-text">L'IA applique un protocole de double-vérification et marque ⚠️ tout élément incertain. Les numéros de page et de volume doivent être confirmés dans les sources primaires avant tout usage académique sérieux.</p>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-ico">🌐</span>
+        <div>
+          <div class="notice-title">Sources de référence</div>
+          <p class="notice-text">
+            <a href="https://thaqalayn.net" target="_blank">thaqalayn.net</a> ·
+            <a href="https://wasail-al-shia.net" target="_blank">wasail-al-shia.net</a> ·
+            <a href="https://al-islam.org" target="_blank">al-islam.org</a> ·
+            <a href="https://ar.lib.eshia.ir" target="_blank">lib.eshia.ir</a> ·
+            <a href="https://www.sistani.org" target="_blank">sistani.org</a> ·
+            <a href="https://en.wikishia.net" target="_blank">wikishia.net</a>
+          </p>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-ico">🚫</span>
+        <div>
+          <div class="notice-title">Ce que cet outil n'est pas</div>
+          <p class="notice-text">Ni autorité religieuse ni source de fatwā. Pour les questions de fiqh pratique, consultez votre marjaʿ qualifié (Sistānī, Khāmeneʾī, etc.).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>
+    Maktaba al-Shīʿa · Outil académique d'aide à la recherche ·
+    Références à confirmer dans les sources primaires ·
+    <a href="#" onclick="switchTab('notice');return false">Notice complète</a>
+  </p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  DONNÉES
+// ═══════════════════════════════════════════════════════
+
+const GLOSSARY = {
+  "isnād":"Chaîne de transmission d'un hadīth — liste des transmetteurs depuis l'Infaillible jusqu'au compilateur. Sa solidité détermine le grade du hadīth.",
+  "rijāl":"Science des transmetteurs (ʿilm al-rijāl) — évalue la fiabilité (tawthīq) ou la faiblesse (taḍʿīf) de chaque maillon de la chaîne.",
+  "tawātur":"Transmission par un si grand nombre de sources indépendantes qu'une fabrication est impossible → certitude absolue (yaqīn). Types : lafẓī (texte identique) et maʿnawī (sens convergent).",
+  "mutawātir":"Hadīth dont la transmission massive produit la certitude (yaqīn). Voir tawātur.",
+  "āhād":"Hadīth rapporté par un seul transmetteur → probabilité (ẓann). Ḥujja en fiqh si ṣaḥīḥ. Insuffisant seul pour les croyances fondamentales (ʿaqīda) selon l'école uṣūlīe.",
+  "ṣaḥīḥ":"Grade le plus élevé : tous les transmetteurs sont chiites duodécimains fiables (thiqāt) selon les livres de rijāl, isnād continu.",
+  "ḥasan":"Transmetteurs loués (mamdūḥ) sans tawthīq explicite. Accepté par la majorité des fuqahāʾ uṣūlīs.",
+  "muwaththaq":"Transmetteurs fiables mais non chiites duodécimains. Accepté par la plupart des fuqahāʾ.",
+  "ḍaʿīf":"Un ou plusieurs transmetteurs rejetés ou inconnus. Valeur probatoire insuffisante.",
+  "mursal":"Isnād incomplet. Généralement ḍaʿīf, sauf mursal d'Ibn Abī ʿUmayr, Ṣafwān et al-Bazzanṭī (acceptés par consensus).",
+  "mawqūf":"Chaîne s'arrêtant à un Compagnon de l'Imam, non attribué à l'Infaillible. Valeur probatoire limitée.",
+  "athar":"Paroles ou actes d'un Compagnon des Imams, par opposition au hadīth de l'Infaillible.",
+  "mawḍūʿ":"Hadīth fabriqué. Rejeté unanimement par les muhaddithīn chiites.",
+  "ḥujjiyya":"Valeur probatoire — ce qui rend une source apte à fonder un jugement juridique ou théologique.",
+  "uṣūlī":"École admettant l'ijtihād, la valeur probatoire du khabar al-wāḥid ṣaḥīḥ en fiqh, et le rôle de la raison (ʿaql) comme source du droit.",
+  "akhbārī":"École privilégiant le retour direct aux hadiths sans ijtihād ni raison spéculative. A produit les grandes encyclopédies (Wasāʾil, Biḥār, al-Wāfī).",
+  "ijtihād":"Effort d'interprétation juridique d'un savant qualifié pour déduire des jugements à partir des sources.",
+  "taqlīd":"Suivre les décisions juridiques d'un mujtahid qualifié — obligatoire pour le non-mujtahid selon l'école uṣūlīe.",
+  "marjaʿ":"Source d'émulation — faqīh qualifié dont les décisions juridiques sont suivies. Pl. marājiʿ.",
+  "basāṭa":"Simplicité divine absolue — l'Essence divine est sans composition d'aucune sorte. Fondement de la théologie imāmite et de la ḥikma islamique.",
+  "tashkīk al-wujūd":"Gradation de l'être (Mullā Ṣadrā) — l'être est une réalité unique à degrés d'intensité variables, du plus intense (Dieu) au plus faible (matière).",
+  "waḥdat al-wujūd":"Unité de l'être (Ibn ʿArabī, reformulé par Mullā Ṣadrā en waḥda fī l-kathra) — Dieu est l'être réel absolu, les existants sont des tajalliyyāt. Distinct du panthéisme.",
+  "ḥaraka jawhariyya":"Mouvement substantiel (Mullā Ṣadrā) — la substance elle-même est en perpétuel renouvellement, pas seulement ses accidents.",
+  "ʿirfān naẓarī":"Mystique théorique — doctrine des réalités spirituelles, de la hiérarchie de l'être et des noms divins, par opposition à l'ʿirfān ʿamalī (voie pratique).",
+  "ḥikma mutaʿāliya":"Sagesse transcendante — école philosophique de Mullā Ṣadrā, synthèse de la falsafa péripatéticienne, de l'ishrāq et du ʿirfān chiite.",
+  "tajallī":"Épiphanie/manifestation divine. Pl. tajalliyyāt — façon dont l'Être absolu se manifeste dans les existants.",
+  "wilāya":"Autorité spirituelle et politique des Imams. Dimension ʿirfānīe (walāya kawniyya) et juridique (wilāyat al-faqīh).",
+  "ʿiṣma":"Infaillibilité des Prophètes et des douze Imams — préservation de tout péché et de toute erreur dans la transmission du message divin.",
+  "ghayba":"Occultation de l'Imam al-Mahdī (aj) depuis 260 H. Mineure (260–329 H) puis majeure (329 H → présent).",
+  "fiqh":"Jurisprudence islamique — science déduisant les jugements pratiques (aḥkām) à partir des sources.",
+  "naṣṣ":"Texte explicite sans ambiguïté d'interprétation (Coran ou hadīth).",
+  "uṣūl al-fiqh":"Principes de la jurisprudence — méthodologie déductive du fiqh.",
+};
+
+const TERM_KEYS = Object.keys(GLOSSARY).sort((a,b) => b.length - a.length);
+
+const MODES = [
+  {id:"hadith",  ico:"◈", label:"Hadiths",            ac:"#2a7a6f", desc:"Traditions · isnād · grade · références"},
+  {id:"quran",   ico:"◇", label:"Qurʾān & Tafsīr",   ac:"#3a4a8a", desc:"Āyāt + exégèse chiite classique"},
+  {id:"kalam",   ico:"△", label:"Kalām",              ac:"#6a3a8a", desc:"Théologie · Mufīd · Ḥillī · Ṭūsī"},
+  {id:"falsafa", ico:"✦", label:"Falsafa & ʿIrfān",  ac:"#8a3a2a", desc:"Mullā Ṣadrā · Ṭabāṭabāʾī · ʿirfān"},
+  {id:"fiqh",    ico:"◎", label:"Fiqh",              ac:"#9a6f2a", desc:"Droit chiite · marājiʿ · preuves"},
+  {id:"aqida",   ico:"◉", label:"ʿAqīda",            ac:"#2a5a8a", desc:"Croyances · Tawḥīd · Imāma"},
+  {id:"general", ico:"⊕", label:"Développement libre",ac:"#5a4a3a", desc:"Synthèse multi-sources"},
+];
+
+const SUGG = {
+  hadith:  ["الصبر — La patience","الإمامة","فاطمة الزهراء (as)","التوبة","الموت","كربلاء والإمام الحسين","العلم والعقل"],
+  quran:   ["Sūrat al-Ikhlāṣ — tawḥīd","Āyat al-Wilāya (5:55)","Āyat al-Kursī (2:255)","Āyat al-Tathīr (33:33)","Les Ūlū al-Amr (4:59)"],
+  kalam:   ["La simplicité divine (basāṭa)","Dhāt et Ṣifāt — 6 positions","L'infaillibilité (ʿiṣma)","Naṣṣ al-Ghadīr — preuve de l'Imamat","Ruʾyat Allāh"],
+  falsafa: ["Tashkīk vs waḥdat al-wujūd","Ḥaraka jawhariyya","L'Homme parfait (Insān Kāmil)","Waḥda fī l-kathra — Mullā Ṣadrā","Marātib al-wujūd"],
+  fiqh:    ["Les bains rituels (ghusl)","Wuḍūʾ et tayammum","Le mariage temporaire (mutʿa)","Le khums","La marjaʿiyya et la taqlīd"],
+  aqida:   ["La basāṭa divine — 6 positions","Dhāt et Ṣifāt","La ʿiṣma des Imams","Le Mahdī (aj) et l'occultation","La prédestination (qaḍāʾ wa qadar)"],
+  general: ["Naṣṣ al-Ghadīr — analyse complète","Position de Fāṭima (as)","Wilāyat al-faqīh — fondements","Āl al-Bayt dans les sources sunnites","Philosophie de Mullā Ṣadrā — introduction"],
+};
+
+// ═══════════════════════════════════════════════════════
+//  ÉTAT GLOBAL
+// ═══════════════════════════════════════════════════════
+let currentMode = "general";
+let currentResult = "";
+let currentQuery = "";
+let searchHistory = [];
+let feedbackType = "référence";
+let apiKey = localStorage.getItem("mk_api_key") || "";
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+function init() {
+  renderModes();
+  renderSuggs("general");
+  renderGlossary("");
+  renderFeedbackTags();
+  updateApiBtn();
+  if (apiKey) {
+    document.getElementById("api-key-input").value = apiKey;
+    showApiStatus();
+    document.getElementById("api-warning").style.display = "none";
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  API KEY
+// ═══════════════════════════════════════════════════════
+function updateApiKey(val) {
+  apiKey = val.trim();
+  localStorage.setItem("mk_api_key", apiKey);
+  showApiStatus();
+  updateApiBtn();
+}
+
+function showApiStatus() {
+  const st = document.getElementById("api-key-status");
+  if (apiKey) {
+    st.style.display = "block";
+    st.textContent = "✓ Clé enregistrée (" + apiKey.slice(0,14) + "…)";
+  } else {
+    st.style.display = "none";
+  }
+}
+
+function updateApiBtn() {
+  const btn = document.getElementById("api-btn");
+  const warn = document.getElementById("api-warning");
+  if (apiKey) {
+    btn.textContent = "⚙️ API ✓";
+    btn.className = "api-btn ok";
+    if (warn) warn.style.display = "none";
+  } else {
+    btn.textContent = "⚙️ API manquante";
+    btn.className = "api-btn missing";
+    if (warn) warn.style.display = "block";
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════════════
+function switchTab(name) {
+  ["search","glossary","notice"].forEach(t => {
+    document.getElementById("tab-content-"+t).style.display = t===name?"block":"none";
+    const btn = document.getElementById("tab-"+t);
+    if (btn) btn.classList.toggle("on", t===name);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODES
+// ═══════════════════════════════════════════════════════
+function hexToRgb(hex) {
+  const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return r ? parseInt(r[1],16)+","+parseInt(r[2],16)+","+parseInt(r[3],16) : "100,100,100";
+}
+
+function renderModes() {
+  const grid = document.getElementById("modes-grid");
+  grid.innerHTML = MODES.map(m => {
+    const on = m.id === currentMode;
+    const bg = on ? "rgba("+hexToRgb(m.ac)+",.07)" : "var(--bg2)";
+    const bdr = on ? m.ac+"50" : "var(--bdr)";
+    return `<button class="mode-card${on?" on":""}" id="mode-${m.id}" onclick="selectMode('${m.id}')" style="background:${bg};border-color:${bdr}">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
+        <span class="mode-icon" style="color:${m.ac}">${m.ico}</span>
+        <span class="mode-label" style="color:${on?m.ac:"var(--ink)"}">${m.label}</span>
+      </div>
+      <div class="mode-desc">${m.desc}</div>
+    </button>`;
+  }).join("");
+}
+
+function selectMode(id) {
+  currentMode = id;
+  renderModes();
+  renderSuggs(id);
+  const m = MODES.find(x => x.id===id);
+  if (m) {
+    document.getElementById("search-ico").textContent = m.ico;
+    document.getElementById("search-ico").style.color = m.ac;
+    document.getElementById("search-input").placeholder = (SUGG[id]||[])[0]||"Votre sujet…";
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SUGGESTIONS
+// ═══════════════════════════════════════════════════════
+function renderSuggs(mode) {
+  document.getElementById("suggs").innerHTML = (SUGG[mode]||[]).map(s =>
+    `<button class="sugg-btn" onclick="quickSearch('${s.replace(/'/g,"\\'")}')">${s}</button>`
+  ).join("");
+}
+
+function quickSearch(s) {
+  document.getElementById("search-input").value = s;
+  doSearch();
+}
+
+// ═══════════════════════════════════════════════════════
+//  GLOSSAIRE
+// ═══════════════════════════════════════════════════════
+function renderGlossary(filter) {
+  const entries = Object.entries(GLOSSARY).filter(([k,v]) =>
+    !filter || k.toLowerCase().includes(filter.toLowerCase()) || v.toLowerCase().includes(filter.toLowerCase())
+  );
+  document.getElementById("gloss-count").textContent = entries.length + " termes";
+  document.getElementById("gloss-list").innerHTML = entries.map(([k,v]) =>
+    `<div class="gloss-item"><div class="gloss-term">${k}</div><div class="gloss-def">${v}</div></div>`
+  ).join("");
+}
+
+function filterGlossary(val) { renderGlossary(val); }
+
+// ═══════════════════════════════════════════════════════
+//  TOOLTIP
+// ═══════════════════════════════════════════════════════
+function showTooltip(term, def, el) {
+  const tip = document.getElementById("tooltip");
+  document.getElementById("tooltip-term").textContent = term;
+  document.getElementById("tooltip-def").textContent = def;
+  const rect = el.getBoundingClientRect();
+  tip.style.top = (rect.bottom+8)+"px";
+  tip.style.left = Math.min(rect.left, window.innerWidth-310)+"px";
+  tip.classList.add("show");
+}
+
+function hideTooltip() {
+  document.getElementById("tooltip").classList.remove("show");
+}
+
+document.addEventListener("pointerdown", function(e) {
+  if (!e.target.closest(".tooltip-box") && !e.target.classList.contains("term")) hideTooltip();
+});
+
+// ═══════════════════════════════════════════════════════
+//  LINKTERMS — termes techniques cliquables
+// ═══════════════════════════════════════════════════════
+function linkTerms(text) {
+  let result = text;
+  TERM_KEYS.forEach(term => {
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const re = new RegExp("(?<![\\w\\-])"+escaped+"(?![\\w\\-])","gi");
+    result = result.replace(re, match => {
+      const defEsc = GLOSSARY[term].replace(/'/g,"\\'").replace(/"/g,"&quot;");
+      return `<span class="term" onclick="showTooltip('${term.replace(/'/g,"\\'")}','${defEsc}',this)">${match}</span>`;
+    });
+  });
+  return result;
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDU MARKDOWN
+// ═══════════════════════════════════════════════════════
+function renderMarkdown(text) {
+  let html = "";
+  text.split("\n").forEach(ln => {
+    if (/^## /.test(ln)) {
+      html += `<h2>${escHtml(ln.replace(/^## /,""))}</h2>`;
+    } else if (/^### /.test(ln)) {
+      html += `<h3>${escHtml(ln.replace(/^### /,""))}</h3>`;
+    } else if (/^---+$/.test(ln.trim())) {
+      html += `<hr>`;
+    } else if (/^>/.test(ln)) {
+      html += `<div class="arabic-text">${escHtml(ln.replace(/^>\s?/,""))}</div>`;
+    } else if (/⚠️/.test(ln)) {
+      html += `<div class="warn-box">${escHtml(ln)}</div>`;
+    } else if (/https?:\/\//.test(ln)) {
+      const linked = escHtml(ln).replace(/(https?:\/\/[^\s&]+)/g,'<a href="$1" target="_blank" rel="noreferrer">$1</a>');
+      html += `<p>${linked}</p>`;
+    } else if (/\*\*/.test(ln)) {
+      const bolded = escHtml(ln).replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>");
+      html += `<p>${linkTerms(bolded)}</p>`;
+    } else if (/^  —|^— /.test(ln)) {
+      html += `<p class="indent">${linkTerms(escHtml(ln))}</p>`;
+    } else if (ln.startsWith("•")) {
+      html += `<p class="bullet-p">${linkTerms(escHtml(ln))}</p>`;
+    } else if (ln.trim()==="") {
+      html += `<div class="spacer"></div>`;
+    } else {
+      html += `<p>${linkTerms(escHtml(ln))}</p>`;
+    }
+  });
+  return html;
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// ═══════════════════════════════════════════════════════
+//  PROMPT SYSTÈME
+// ═══════════════════════════════════════════════════════
+function buildSystem(mode) {
+  const mp = {
+    hadith:"Fournis les hadiths pertinents avec texte arabe intégral, traduction française fidèle, référence exacte (corpus/tome/chapitre/N° hadīth), type de tradition (mutawātir/āhād/mursal/qudsī), grade rijālī avec justification (al-Najāshī, al-Khūʾī dans Muʿjam), et évaluations de 2-3 muḥaqqiqīn avec ouvrage + volume + page. Fournir l'URL thaqalayn.net si disponible. Viser 8-15 hadiths.",
+    quran:"Pour chaque āya : texte arabe + traduction FR + asbāb al-nuzūl chiite (source) + tafsīr de 2 sources min (Tafsīr al-Mīzān vol./p., Majmaʿ al-Bayān vol./p., Tafsīr al-Qummī) + hadiths des Imams sur ce verset avec références.",
+    kalam:"Exposition rationnelle avec arguments ʿaqlī et naqlī. Citer mutakallimīn avec références exactes (ouvrage + vol. + page) : Mufīd (Awāʾil, Taṣḥīḥ al-Iʿtiqād), Murtaḍā (Rasāʾil), Ṭūsī (Al-Iqtiṣād), Ḥillī (Kashf al-Murād), Ṭabāṭabāʾī (Nihāyat al-Ḥikma, Rasāʾil Tawḥīdiyya), Subḥānī (Al-Ilāhiyyāt), Ḥaydarī (Sharḥ Nihāyat al-Ḥikma). Divergences internes (Ṣadūq vs Mufīd etc.).",
+    falsafa:"DISTINGUER SYSTÉMATIQUEMENT : ①Waḥdat al-wujūd (Ibn ʿArabī) — tajalliyyāt ≠ panthéisme. ②Tashkīk al-wujūd (Mullā Ṣadrā, Al-Asfār) — être unique gradué en intensité. ③Waḥda fī l-kathra (Mullā Ṣadrā — synthèse). Citer avec vol.+page : Al-Asfār, Al-Mashāʿir, Nihāyat al-Ḥikma, Jāmiʿ al-Asrār (Āmulī), Sharḥ Nihāyat al-Ḥikma (Ḥaydarī).",
+    fiqh:"Formulation précise de la masʾala. Preuves (Wasāʾil al-Shīʿa tome/chap./N° + URL wasail-al-shia.net). Positions des marājiʿ avec références : Khūʾī (Minhāj al-Ṣāliḥīn vol./N°), Sistānī (Minhāj N° + URL sistani.org), Khāmeneʾī (Ajwibat N°), Muḥaqqiq al-Ḥillī (Sharāʾiʿ), Shahīd Thānī (Sharḥ al-Lumʿa).",
+    aqida:"RÈGLE : khabar al-wāḥid insuffisant seul pour l'ʿaqīda → exige tawātur ou preuve ʿaqlīe. Indiquer valeur épistémique de chaque source. Structure : Thèse → Coran+tafsīr → Sources narratives (TYPE+valeur) → ʿAql → Divergences (Ṣadūq/Mufīd/kalāmī/falsafī) → Position dominante.",
+    general:"Combiner toutes sources selon pertinence. Identifier la nature de chaque source. Structurer avec introduction, développement, synthèse académique.",
+  };
+
+  return `Tu es un savant islamique chiite imāmite de niveau académique supérieur. Outil destiné aux étudiants en sciences islamiques (ṭullāb al-ʿilm) et chercheurs sérieux.
+
+PROTOCOLE DOUBLE-VÉRIFICATION OBLIGATOIRE :
+- Challenge interne : ce tome/volume existe-t-il dans cet ouvrage ? Ce N° est-il plausible ?
+- Si incertain → marquer ⚠️ À VÉRIFIER (ne jamais inventer un numéro de page)
+- RÈGLE D'OR : "Al-Kāfī, Kitāb al-ʿAql ⚠️ page à vérifier" VAUT MIEUX qu'inventer "p. 47"
+
+NUANCES SAVANTS :
+- Al-Ṣadūq = muhaddith naṣṣī (pas akhbārī pur, critiqué par Mufīd dans Taṣḥīḥ al-Iʿtiqād sur les attributs)
+- Al-Majlisī = encyclopédiste tendance akhbārīe + taḥqīq rijālī dans Mirʾāt al-ʿUqūl
+- Al-Fayḍ al-Kāshānī = akhbārī + ʿirfān (disciple Mullā Ṣadrā)
+- Mullā Ṣadrā : tashkīk al-wujūd ≠ waḥdat al-wujūd (Ibn ʿArabī)
+
+${mp[mode]||mp.general}
+
+FORMAT DE RÉPONSE :
+## INTRODUCTION
+[Cadre. Valeur épistémique globale. Richesse des sources.]
+---
+### N. [OUVRAGE] | Tome X, Chap. "Titre", H.N° / p. P
+**Nature** : [type + tradition] | **Grade** : [si applicable + justification]
+**Évaluations** : — [Savant, Ouvrage vol. X p. Y] : [position] | **Divergence** : [si existante]
+> [Texte arabe intégral — jamais abrégé]
+**Traduction** : [fidèle] | **Commentaires** : [savants nommés + références + vol. + page]
+---
+## SYNTHÈSE ACADÉMIQUE
+[Valeur épistémique | Classification des traditions | Divergences inter-savants | Implication | Références complémentaires]
+
+Langue principale : FRANÇAIS. Textes arabes conservés intégralement.`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  RECHERCHE
+// ═══════════════════════════════════════════════════════
+async function doSearch() {
+  const query = document.getElementById("search-input").value.trim();
+  if (!query) return;
+  if (!apiKey) {
+    showError("⚠️ Clé API manquante — cliquez sur le bouton ⚙️ en haut pour la configurer.");
+    return;
+  }
+
+  const m = MODES.find(x => x.id===currentMode);
+  currentQuery = query;
+
+  // Affichage loading
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("result-box").style.display = "none";
+  document.getElementById("error-box").style.display = "none";
+  document.getElementById("suggs").style.display = "none";
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("loader-title").textContent = (m?m.ico+" "+m.label:"Recherche…");
+  document.getElementById("search-btn").disabled = true;
+  document.getElementById("search-btn").textContent = "…";
+
+  try {
+    const messages = [{
+      role: "user",
+      content: `Mode : ${m?m.ico+" "+m.label:"Général"}
+Sujet : "${query}"
+
+Fournis une réponse académique complète sur ce sujet selon tes instructions. Références exactes avec ouvrage, tome et page. Textes arabes intégraux. Traductions françaises fidèles. Évaluations des savants avec ouvrages et volumes. Synthèse académique finale obligatoire.`
+    }];
+
+    let finalText = "";
+
+    // Boucle pour gérer les appels web_search (tool_use)
+    for (let turn = 0; turn < 10; turn++) {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 4000,
+          system: buildSystem(currentMode),
+          tools: [{type:"web_search_20250305", name:"web_search"}],
+          messages: messages,
+        })
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.error?.message || "Erreur HTTP "+res.status);
+      }
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+
+      // Collecter le texte
+      const texts = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text);
+      if (texts.length) finalText = texts.join("\n");
+
+      // Fin de conversation
+      if (data.stop_reason === "end_turn") break;
+
+      // Gérer les tool_use (web_search)
+      const toolUses = (data.content||[]).filter(b=>b.type==="tool_use");
+      if (!toolUses.length) break;
+
+      messages.push({role:"assistant", content:data.content});
+      messages.push({
+        role:"user",
+        content: toolUses.map(tu => ({
+          type:"tool_result",
+          tool_use_id: tu.id,
+          content: tu.output||"",
+        }))
+      });
+    }
+
+    if (!finalText) throw new Error("Aucune réponse reçue. Vérifiez votre clé API.");
+
+    currentResult = finalText;
+    showResult(query, finalText, m);
+    addToHistory(query, currentMode, finalText);
+
+  } catch(e) {
+    showError("⚠️ "+e.message);
+  } finally {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("search-btn").disabled = false;
+    document.getElementById("search-btn").textContent = "Rechercher";
+    document.getElementById("suggs").style.display = "flex";
+  }
+}
+
+function showResult(query, text, m) {
+  document.getElementById("result-ico").textContent = m?m.ico:"";
+  document.getElementById("result-ico").style.color = m?m.ac:"var(--gold)";
+  document.getElementById("result-mode-label").textContent = m?m.label:"";
+  const ql = query.length>42?query.slice(0,42)+"…":query;
+  document.getElementById("result-query-label").textContent = "— "+ql;
+  document.getElementById("result-time").textContent = new Date().toLocaleTimeString("fr-FR");
+  document.getElementById("result-body").innerHTML = renderMarkdown(text);
+  document.getElementById("result-box").style.display = "block";
+}
+
+function showError(msg) {
+  const el = document.getElementById("error-box");
+  el.innerHTML = msg;
+  el.style.display = "block";
+  document.getElementById("home-screen").style.display = "none";
+}
+
+// ═══════════════════════════════════════════════════════
+//  HISTORIQUE
+// ═══════════════════════════════════════════════════════
+function addToHistory(q, mode, text) {
+  searchHistory.unshift({q, mode, text});
+  if (searchHistory.length > 9) searchHistory.pop();
+  renderHistory();
+}
+
+function renderHistory() {
+  const wrap = document.getElementById("history-wrap");
+  const btns = document.getElementById("history-btns");
+  if (searchHistory.length <= 1) return;
+  wrap.style.display = "block";
+  btns.innerHTML = searchHistory.slice(1).map((h,i) => {
+    const m = MODES.find(x => x.id===h.mode);
+    const label = h.q.length>28?h.q.slice(0,28)+"…":h.q;
+    return `<button class="hist-btn" onclick="loadHistory(${i+1})">${m?m.ico:""} ${label}</button>`;
+  }).join("");
+}
+
+function loadHistory(idx) {
+  const h = searchHistory[idx];
+  if (!h) return;
+  currentQuery = h.q;
+  currentResult = h.text;
+  document.getElementById("search-input").value = h.q;
+  selectMode(h.mode);
+  const m = MODES.find(x => x.id===h.mode);
+  showResult(h.q, h.text, m);
+}
+
+// ═══════════════════════════════════════════════════════
+//  COPIER
+// ═══════════════════════════════════════════════════════
+function copyResult() {
+  if (!currentResult) return;
+  navigator.clipboard.writeText(currentResult).then(() => {
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "✓ Copié";
+    setTimeout(() => btn.textContent = "Copier", 2000);
+  }).catch(() => {});
+}
+
+// ═══════════════════════════════════════════════════════
+//  FEEDBACK
+// ═══════════════════════════════════════════════════════
+function renderFeedbackTags() {
+  const tags = ["référence","hadīth inexact","traduction","position de savant","autre"];
+  document.getElementById("feedback-tags").innerHTML = tags.map(t =>
+    `<button class="tag-btn${t===feedbackType?" on":""}" onclick="selectFeedbackTag('${t}')">${t}</button>`
+  ).join("");
+}
+
+function selectFeedbackTag(t) {
+  feedbackType = t;
+  renderFeedbackTags();
+}
+
+function openFeedback() {
+  const subj = document.getElementById("feedback-subject-text");
+  if (subj) subj.textContent = "Sujet : "+(currentQuery.length>50?currentQuery.slice(0,50)+"…":currentQuery);
+  document.getElementById("feedback-form-wrap").style.display = "block";
+  document.getElementById("feedback-success-wrap").style.display = "none";
+  const msgInput = document.getElementById("feedback-msg-input");
+  msgInput.value = "";
+  document.getElementById("feedback-send-btn").disabled = true;
+  msgInput.oninput = function() {
+    document.getElementById("feedback-send-btn").disabled = !this.value.trim();
+  };
+  openModal("modal-feedback");
+}
+
+function sendFeedback() {
+  const msg = document.getElementById("feedback-msg-input").value;
+  const body = "Sujet: "+currentQuery+"\nType: "+feedbackType+"\nMessage: "+msg;
+  window.open("mailto:?subject=Signalement Maktaba al-Shia — "+feedbackType+"&body="+encodeURIComponent(body));
+  document.getElementById("feedback-form-wrap").style.display = "none";
+  document.getElementById("feedback-success-wrap").style.display = "block";
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODALS
+// ═══════════════════════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.add("show"); }
+function closeModal(id) { document.getElementById(id).classList.remove("show"); }
+
+// ═══════════════════════════════════════════════════════
+//  DÉMARRAGE
+// ═══════════════════════════════════════════════════════
+init();
+</script>
+
+</body>
+</html>
