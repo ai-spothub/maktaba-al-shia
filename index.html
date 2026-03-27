@@ -737,7 +737,7 @@ Fournis une réponse académique complète sur ce sujet selon tes instructions. 
 
     // Boucle pour gérer les appels web_search (tool_use)
     for (let turn = 0; turn < 10; turn++) {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("https://maktaba-proxy.ju-elg-92.workers.dev", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
